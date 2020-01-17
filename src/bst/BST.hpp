@@ -40,7 +40,7 @@ class BST {
 
     /** TODO */
     ~BST() {
-        destroy(root);
+        deleteAll(root);
         root = 0;
         return;
     }
@@ -184,17 +184,6 @@ class BST {
     }
 
     // Add more helper functions below
-    static void destroy(BSTNode<Data>* TRoot) {
-        if (TRoot != 0) {
-            destroy(TRoot->left);
-            TRoot->left = 0;
-            destroy(TRoot->right);
-            TRoot->right = 0;
-            TRoot->parent = 0;
-            delete (TRoot);
-        }
-        return;
-    }
 };
 
 #endif  // BST_HPP
