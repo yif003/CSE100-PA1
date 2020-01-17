@@ -39,34 +39,90 @@ class BST {
     BST(const BST<Data>& bst) : root(0), isize(0), iheight(-1) {}
 
     /** TODO */
-    ~BST() {}
+    ~BST() {
+        destroy(root);
+        root = 0;
+        return;
+    }
 
     /** TODO */
-    bool insert(const Data& item) { return false; }
+    bool insert(const Data& item) {
+        BSTNode<Data>** curr = &root;
+        BSTNode<Data>* parent = 0;
+        int h = 0;
+        while ((*curr) != 0) {
+            parent = *curr;
+            if ((*curr)->data == item) {
+                return false;
+            } else if (item < (*curr)->data) {
+                h++;
+                curr = &(*curr)->left;
+            } else {
+                h++;
+                curr = &(*curr)->right;
+            }
+        }
+        iheight = max(iheight, h);
+
+        (*curr) = new BSTNode<Data>(item);
+        (*curr)->parent = parent;
+
+        isize++;
+
+        return true;
+    }
 
     /** TODO */
-    iterator find(const Data& item) const { return 0; }
+    iterator find(const Data& item) const {
+        BSTNode<Data>* curr = root;
+        while (curr != 0 && curr->data != item) {
+            if (item < curr->data)
+                curr = curr->left;
+            else
+                curr = curr->right;
+        }
+        return curr;
+    }
 
     /** TODO */
     bool deleteNode(const Data& item) { return false; }
 
     /** TODO */
-    unsigned int size() const { return 0; }
+    unsigned int size() const { return isize; }
 
     /** TODO */
-    int height() const { return 0; }
+    int height() const { return iheight; }
 
     /** TODO */
-    bool empty() const { return false; }
+    bool empty() const {
+        if (isize == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /** TODO */
-    iterator begin() const { return 0; }
+    iterator begin() const {
+        BSTNode<Data>* curr = root;
+
+        if (curr != 0) {
+            while (curr->left != 0) {
+                curr = curr->left;
+            }
+        }
+        return typename BST<Data>::iterator(curr);
+    }
 
     /** Return an iterator pointing past the last item in the BST. */
     iterator end() const { return typename BST<Data>::iterator(0); }
 
     /** TODO */
-    vector<Data> inorder() const {}
+    vector<Data> inorder() const {
+        vector<Data> mydata;
+        helper(mydata, root);
+        return mydata;
+    }
 
     /**
      * DO NOT CHANGE THIS METHOD
