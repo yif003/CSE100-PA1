@@ -36,7 +36,7 @@ class BSTNode {
     /** TODO */
     BSTNode<Data>* successor() {
         if (right != NULL) {
-            return right->LeftSuccessor();
+            return right->leftSuccessor();
         } else if (parent == NULL) {
             return 0;
         } else if (this == parent->left) {
