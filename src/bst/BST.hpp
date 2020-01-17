@@ -117,18 +117,8 @@ class BST {
     /** Return an iterator pointing past the last item in the BST. */
     iterator end() const { return typename BST<Data>::iterator(0); }
 
-    void helper(vector<Data>& mydata, BSTNode<Data>* root) {
-        if (root == nullptr) return;
-        if (root->left != nullptr) helper(mydata, root->left);
-        mydata.push_back(root->getData());
-        if (root->right != nullptr) helper(mydata, root->right);
-    }
     /** TODO */
-    vector<Data> inorder() const {
-        vector<Data> mydata;
-        helper(mydata, root);
-        return mydata;
-    }
+    vector<Data> inorder() const {}
 
     /**
      * DO NOT CHANGE THIS METHOD
