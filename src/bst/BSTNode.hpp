@@ -46,7 +46,7 @@ class BSTNode {
     }
     BSTNode<Data>* leftSuccessor() {
         if (left != NULL)
-            return (left->leftSuccessor());
+            return left->leftSuccessor();
         else
             return this;
     }
