@@ -52,9 +52,9 @@ class BST {
         int h = 0;
         while ((*curr) != 0) {
             parent = *curr;
-            if ((*curr)->data == item) {
+            if ((*curr)->getData() == item) {
                 return false;
-            } else if (item < (*curr)->data) {
+            } else if (item < (*curr)->getData()) {
                 h++;
                 curr = &(*curr)->left;
             } else {
@@ -75,8 +75,8 @@ class BST {
     /** TODO */
     iterator find(const Data& item) const {
         BSTNode<Data>* curr = root;
-        while (curr != 0 && curr->data != item) {
-            if (item < curr->data)
+        while (curr != 0 && curr->getData() != item) {
+            if (item < curr->getData())
                 curr = curr->left;
             else
                 curr = curr->right;
@@ -117,6 +117,12 @@ class BST {
     /** Return an iterator pointing past the last item in the BST. */
     iterator end() const { return typename BST<Data>::iterator(0); }
 
+    void helper(vector<Data>& mydata, BSTNode<Data>* root) {
+        if (root == nullptr) return;
+        if (root->left != nullptr) helper(mydata, root->left);
+        mydata.push_back(root->getData());
+        if (root->right != nullptr) helper(mydata, root->right);
+    }
     /** TODO */
     vector<Data> inorder() const {
         vector<Data> mydata;
@@ -190,6 +196,17 @@ class BST {
     }
 
     // Add more helper functions below
+    static void destroy(BSTNode<Data>* TRoot) {
+        if (TRoot != 0) {
+            destroy(TRoot->left);
+            TRoot->left = 0;
+            destroy(TRoot->right);
+            TRoot->right = 0;
+            TRoot->parent = 0;
+            delete (TRoot);
+        }
+        return;
+    }
 };
 
 #endif  // BST_HPP
