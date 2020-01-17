@@ -171,12 +171,10 @@ class BST {
 
     /** TODO */
     static void deleteAll(BSTNode<Data>* n) {
-        /* Pseudocode:
-           if current node is null: return;
-           recursively delete left sub-tree
-           recursively delete right sub-tree
-           delete current node
-        */
+        if (0 == n) return;
+        deleteAll(n->left);
+        deleteAll(n->right);
+        delete n;
     }
 
     /** TODO */
