@@ -36,7 +36,12 @@ class BST {
     BST() : root(0), isize(0), iheight(-1) {}
 
     /** TODO */
-    BST(const BST<Data>& bst) : root(0), isize(0), iheight(-1) {}
+    BST(const BST<Data>& bst)
+        : root(bst.root), isize(bst.isize), iheight(bst.iheight) {
+        for (auto each : bst) {
+            this->insert(each);
+        }
+    }
 
     /** TODO */
     ~BST() {
@@ -118,12 +123,6 @@ class BST {
     iterator end() const { return typename BST<Data>::iterator(0); }
 
     /** TODO */
-    void helper(vector<Data>& mydata, BSTNode<Data>* root) {
-        if (root == nullptr) return;
-        if (root->left != nullptr) helper(mydata, root->left);
-        mydata.push_back(root->getData());
-        if (root->right != nullptr) helper(mydata, root->right);
-    }
     vector<Data> inorder() {
         vector<Data> mydata;
         helper(mydata, root);
@@ -177,6 +176,12 @@ class BST {
 
   private:
     /** TODO Helper function for begin() */
+    void helper(vector<Data>& mydata, BSTNode<Data>* root) {
+        if (root == nullptr) return;
+        if (root->left != nullptr) helper(mydata, root->left);
+        mydata.push_back(root->getData());
+        if (root->right != nullptr) helper(mydata, root->right);
+    }
     static BSTNode<Data>* first(BSTNode<Data>* root) { return 0; }
 
     /** TODO */
