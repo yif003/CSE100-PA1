@@ -90,7 +90,9 @@ class BST {
     }
 
     /** TODO */
-    bool deleteNode(const Data& item) { return false; }
+    bool deleteNode(const Data& item) {
+        return deleteNode(root, item);
+    }
 
     /** TODO */
     unsigned int size() const { return isize; }
@@ -176,12 +178,6 @@ class BST {
 
   private:
     /** TODO Helper function for begin() */
-    void helper(vector<Data>& mydata, BSTNode<Data>* root) {
-        if (root == nullptr) return;
-        if (root->left != nullptr) helper(mydata, root->left);
-        mydata.push_back(root->getData());
-        if (root->right != nullptr) helper(mydata, root->right);
-    }
     static BSTNode<Data>* first(BSTNode<Data>* root) { return 0; }
 
     /** TODO */
@@ -199,6 +195,53 @@ class BST {
     }
 
     // Add more helper functions below
+    void helper(vector<Data>& mydata, BSTNode<Data>* root) {
+        if (root == nullptr) return;
+        if (root->left != nullptr) helper(mydata, root->left);
+        mydata.push_back(root->getData());
+        if (root->right != nullptr) helper(mydata, root->right);
+    }
+    
+    BSTNode<Data>* deleteNode(BSTNode<Data>* root, const Data& item){
+        if(!root){
+            return NULL;
+        }
+        if(root->getData() == item){
+            if(root->right == NULL){
+                BSTNode<Data>* left = root->left;
+                delete root;
+                return left;
+            }
+            else if(root->left == NULL){
+                BSTNode<Data>* right = root->right;
+                delete root;
+                return right;
+            }
+            else{
+                BSTNode<Data>* succParent = root->right;
+                BSTNode<Data>* succ = root->right;
+                while (succ->left != NULL)
+                {
+                    succParent = succ;
+                    succ = succ->left;
+                }
+                succParent->left = succ->right;
+                root->setData(succ->getData());
+                delete succ;
+                return root;
+            }
+        }
+        else {
+            if(root <root->left){
+                root-> left = deleteNode(root->left, item);
+            }
+            else if(root <root->right){
+            root-> right = deleteNode(root->right, item);
+            }
+        }
+        return root;
+    }
+
 };
 
 #endif  // BST_HPP
