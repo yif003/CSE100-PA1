@@ -231,7 +231,8 @@ class BST {
                 root->setData(temp->getData());
                 
                 delete temp;
-                isize--;
+                delete succ;
+                isize = isize -1;
                 return root;
             }
         }

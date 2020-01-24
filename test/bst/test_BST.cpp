@@ -60,5 +60,5 @@ TEST_F(SmallBSTFixture, SMALL_INSERT_DUPLICATES_TEST) {
 
 // TODO: add more BST tests here
 TEST_F(SmallBSTFixture, DELETE_TEST) {
-    ASSERT_TRUE(bst.deleteNode(5));
+    ASSERT_TRUE(bst.deleteNode(3));
 }
