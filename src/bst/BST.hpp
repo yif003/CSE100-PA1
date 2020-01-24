@@ -233,6 +233,7 @@ class BST {
             if (!root->right) {
                 BSTNode<Data>* left = root->left;
                 delete root;
+                isize--;
                 return left;
             }
             else {
@@ -245,7 +246,6 @@ class BST {
                 delete temp;
                 
             }
-            isize--;
         }
         else {
             root->left = deleteNodeHelper(root->left, key);
