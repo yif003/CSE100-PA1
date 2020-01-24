@@ -202,47 +202,30 @@ class BST {
         if (root->right != nullptr) helper(mydata, root->right);
     }
     
-    BSTNode<Data>* deleteNodeHelper(BSTNode<Data>* root, const Data& item){
-        if(!root){
-            return NULL;
-        }
-        if(root->getData() == item){
-            if(root->right == NULL){
+    BSTNode<Data>* deleteNodeHelper(BSTNode<Data>* root, const Data& key) {
+        if (!root) return nullptr;
+        if (root->getData() == key) {
+            if (!root->right) {
                 BSTNode<Data>* left = root->left;
                 delete root;
                 isize--;
                 return left;
             }
-            else if(root->left == NULL){
-                BSTNode<Data>* right = root->right;
-                delete root;
-                isize--;
-                return right;
-            }
-            else{
-                BSTNode<Data>* succ= root->right;
-                
-                while (succ->left != NULL)
-                {
+            else {
+                BSTNode<Data>* succ = root->right;
+                while (succ->left)
                     succ = succ->left;
-                }
-                BSTNode<Data>* temp = succ;
-                temp = root;
-                root->setData(temp->getData());
-                
-                delete temp;
-                delete succ;
-                isize = isize -1;
-                return root;
+                BSTNode<Data>* temp = root;
+                succ = root;
+                root = temp;
+                root->setData(succ->getData());
+                root->right = deleteNodeHelper(root->right, key);
+                isize--;
             }
         }
         else {
-            if(root <root->left){
-                root-> left = deleteNodeHelper(root->left, item);
-            }
-            else if(root <root->right){
-            root-> right = deleteNodeHelper(root->right, item);
-            }
+            root->left = deleteNodeHelper(root->left, key);
+            root->right = deleteNodeHelper(root->right, key);
         }
         return root;
     }

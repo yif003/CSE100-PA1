@@ -43,6 +43,7 @@ class SmallBSTFixture : public ::testing::Test {
         // initialization code here
         vector<int> input{3, 5, 1, 4, 6};
         insertIntoBST(input, bst);
+        bst.deleteNode(6);
     }
     // code in SetUp() will execute just before the test ensues
     // void SetUp() {}
@@ -50,7 +51,7 @@ class SmallBSTFixture : public ::testing::Test {
 
 TEST_F(SmallBSTFixture, SMALL_SIZE_TEST) {
     // assert that the small BST has the correct size
-    ASSERT_EQ(bst.size(), 5);
+    ASSERT_EQ(bst.size(), 4);
 }
 
 TEST_F(SmallBSTFixture, SMALL_INSERT_DUPLICATES_TEST) {
