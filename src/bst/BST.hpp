@@ -198,7 +198,7 @@ class BST {
         if(start > end){
         return NULL;
         }
-        int mid = start + (end-start)/2 + ((start-end) %2 == 0)?0:1;
+        int mid = (start + end)/2;
         BSTNode<Data>* root = new BSTNode<Data>(data[mid]);
         root->right = buildSubtree(data, mid+1, end, depth);
         root->left = buildSubtree(data, start, mid-1, depth);
@@ -233,20 +233,18 @@ class BST {
             if (!root->right) {
                 BSTNode<Data>* left = root->left;
                 delete root;
-                isize--;
                 return left;
             }
             else {
                 BSTNode<Data>* succ = root->right;
-                while (succ->left)
-                    succ = succ->left;
-                BSTNode<Data>* temp = root;
-                *succ = *root;
-                *root = *temp;
+                while (succ->left) succ = succ->left;
+                BSTNode<Data>* temp = new BSTNode<Data>(root->getData());
                 root->setData(succ->getData());
+                succ->setData(temp->getData());
                 root->right = deleteNodeHelper(root->right, key);
-                isize--;
+                
             }
+            isize--;
         }
         else {
             root->left = deleteNodeHelper(root->left, key);
