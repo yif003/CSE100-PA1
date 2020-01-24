@@ -210,11 +210,13 @@ class BST {
             if(root->right == NULL){
                 BSTNode<Data>* left = root->left;
                 delete root;
+                isize--;
                 return left;
             }
             else if(root->left == NULL){
                 BSTNode<Data>* right = root->right;
                 delete root;
+                isize--;
                 return right;
             }
             else{
@@ -228,6 +230,7 @@ class BST {
                 succParent->left = succ->right;
                 root->setData(succ->getData());
                 delete succ;
+                isize--;
                 return root;
             }
         }
