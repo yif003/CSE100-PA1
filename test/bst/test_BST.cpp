@@ -41,7 +41,7 @@ class SmallBSTFixture : public ::testing::Test {
   public:
     SmallBSTFixture() {
         // initialization code here
-        vector<int> input{3, 4, 1, 100, -33};
+        vector<int> input{3, 5, 1, 4, 6};
         insertIntoBST(input, bst);
     }
     // code in SetUp() will execute just before the test ensues
@@ -58,4 +58,9 @@ TEST_F(SmallBSTFixture, SMALL_INSERT_DUPLICATES_TEST) {
     ASSERT_FALSE(bst.insert(3));
 }
 
+
 // TODO: add more BST tests here
+TEST_F(SmallBSTFixture, DELETE_TEST) {
+    // assert failed duplicate insertion
+    ASSERT_TRUE(bst.deleteNode(3));
+}

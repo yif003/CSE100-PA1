@@ -91,7 +91,7 @@ class BST {
 
     /** TODO */
     bool deleteNode(const Data& item) {
-        return deleteNode(root, item);
+        return deleteNodeHelper(root, item);
     }
 
     /** TODO */
@@ -202,7 +202,7 @@ class BST {
         if (root->right != nullptr) helper(mydata, root->right);
     }
     
-    BSTNode<Data>* deleteNode(BSTNode<Data>* root, const Data& item){
+    BSTNode<Data>* deleteNodeHelper(BSTNode<Data>* root, const Data& item){
         if(!root){
             return NULL;
         }
@@ -220,26 +220,27 @@ class BST {
                 return right;
             }
             else{
-                BSTNode<Data>* succParent = root->right;
-                BSTNode<Data>* succ = root->right;
+                BSTNode<Data>* succ= root->right;
+                
                 while (succ->left != NULL)
                 {
-                    succParent = succ;
                     succ = succ->left;
                 }
-                succParent->left = succ->right;
-                root->setData(succ->getData());
-                delete succ;
+                BSTNode<Data>* temp = succ;
+                temp = root;
+                root->setData(temp->getData());
+                
+                delete temp;
                 isize--;
                 return root;
             }
         }
         else {
             if(root <root->left){
-                root-> left = deleteNode(root->left, item);
+                root-> left = deleteNodeHelper(root->left, item);
             }
             else if(root <root->right){
-            root-> right = deleteNode(root->right, item);
+            root-> right = deleteNodeHelper(root->right, item);
             }
         }
         return root;
