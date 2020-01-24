@@ -98,7 +98,9 @@ class BST {
     unsigned int size() const { return isize; }
 
     /** TODO */
-    int height() const { return iheight; }
+    int height() const {
+        return iheight;
+    }
 
     /** TODO */
     bool empty() const {
@@ -129,6 +131,9 @@ class BST {
         vector<Data> mydata;
         helper(mydata, root);
         return mydata;
+    }
+    void setHeight(const Data& iheight){
+        iheight = height(root)-1;
     }
 
     /**
@@ -195,12 +200,18 @@ class BST {
         }
         int mid = (start + end)/2;
         BSTNode<Data>* root = new BSTNode<Data>(data[mid]);
-        root ->left = buildSubtree(data, mid+1, end, depth);
-        root ->right = buildSubtree(data, start, mid-1, depth);
+        root->right = buildSubtree(data, mid+1, end, depth);
+        root->left = buildSubtree(data, start, mid-1, depth);
         return root;
     }
 
     // Add more helper functions below
+    int height(BSTNode<Data>* root){
+        if(!root){
+            return 0;
+        }
+        return max(height(root->left), height(root->right))+1;
+    }
     void helper(vector<Data>& mydata, BSTNode<Data>* root) {
         if (root == nullptr) return;
         if (root->left != nullptr) helper(mydata, root->left);
@@ -222,8 +233,8 @@ class BST {
                 while (succ->left)
                     succ = succ->left;
                 BSTNode<Data>* temp = root;
-                succ = root;
-                root = temp;
+                *succ = *root;
+                *root = *temp;
                 root->setData(succ->getData());
                 root->right = deleteNodeHelper(root->right, key);
                 isize--;
