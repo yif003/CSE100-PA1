@@ -58,9 +58,7 @@ TEST_F(SmallBSTFixture, SMALL_INSERT_DUPLICATES_TEST) {
     ASSERT_FALSE(bst.insert(3));
 }
 
-
 // TODO: add more BST tests here
 TEST_F(SmallBSTFixture, DELETE_TEST) {
-    // assert failed duplicate insertion
-    ASSERT_TRUE(bst.deleteNode(3));
+    ASSERT_TRUE(bst.deleteNode(5));
 }
