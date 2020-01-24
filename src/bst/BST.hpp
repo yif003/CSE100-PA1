@@ -40,7 +40,7 @@ class BST {
         : root(bst.root), isize(bst.isize), iheight(bst.iheight) {
         vector<Data> data(bst.begin(), bst.end());
         sort(data.begin(), data.end());
-        this->root = buildSubtree(data, 0, data.size()-1, iheight);
+        this->root = buildSubtree(data, 0, data.size(), iheight);
     }
 
     /** TODO */
@@ -198,7 +198,7 @@ class BST {
         if(start > end){
         return NULL;
         }
-        int mid = (start + end)/2;
+        int mid = start + (end-start)/2 + ((start-end) %2 == 0)?0:1;
         BSTNode<Data>* root = new BSTNode<Data>(data[mid]);
         root->right = buildSubtree(data, mid+1, end, depth);
         root->left = buildSubtree(data, start, mid-1, depth);
@@ -207,10 +207,18 @@ class BST {
 
     // Add more helper functions below
     int height(BSTNode<Data>* root){
+        int h=0;
+        int b=0;
         if(!root){
-            return 0;
+            return -1;
         }
-        return max(height(root->left), height(root->right))+1;
+        else{
+            height(root->right);
+            h++;
+            height(root->left);
+            b++;
+        }
+        return max(h, b);
     }
     void helper(vector<Data>& mydata, BSTNode<Data>* root) {
         if (root == nullptr) return;
