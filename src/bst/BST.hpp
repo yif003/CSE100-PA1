@@ -40,7 +40,7 @@ class BST {
         : root(bst.root), isize(bst.isize), iheight(bst.iheight) {
         vector<Data> data(bst.begin(), bst.end());
         sort(data.begin(), data.end());
-        this->root = buildSubtree(data, 0, data.size(), iheight);
+        this->root = buildSubtree(data, 0, data.size()-1, iheight);
     }
 
     /** TODO */
