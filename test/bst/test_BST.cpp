@@ -43,7 +43,7 @@ class SmallBSTFixture : public ::testing::Test {
         // initialization code here
         vector<int> input{3, 5, 1, 4, 6};
         insertIntoBST(input, bst);
-        bst.deleteNode(6);
+        bst.deleteNode(4);
     }
     // code in SetUp() will execute just before the test ensues
     // void SetUp() {}

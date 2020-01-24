@@ -38,9 +38,9 @@ class BST {
     /** TODO */
     BST(const BST<Data>& bst)
         : root(bst.root), isize(bst.isize), iheight(bst.iheight) {
-        for (auto each : bst) {
-            this->insert(each);
-        }
+        vector<Data> data(bst.begin(), bst.end());
+        sort(data.begin(), data.end());
+        this->root = buildSubtree(data, 0, data.size(), iheight);
     }
 
     /** TODO */
@@ -189,9 +189,15 @@ class BST {
     }
 
     /** TODO */
-    BSTNode<Data>* buildSubtree(vector<Data>& data, int start, int end,
-                                int depth) {
-        return 0;
+    BSTNode<Data>* buildSubtree(vector<Data>& data, int start, int end, int depth) {
+        if(start > end){
+        return NULL;
+        }
+        int mid = (start + end)/2;
+        BSTNode<Data>* root = new BSTNode<Data>(data[mid]);
+        root ->left = buildSubtree(data, mid+1, end, depth);
+        root ->right = buildSubtree(data, start, mid-1, depth);
+        return root;
     }
 
     // Add more helper functions below
