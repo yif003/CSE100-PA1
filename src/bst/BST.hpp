@@ -37,7 +37,7 @@ class BST {
 
     /** TODO */
     BST(const BST<Data>& bst)
-        : root(bst.root), isize(bst.isize), iheight(bst.iheight) {
+        : root(bst.root), isize(bst.size()), iheight(bst.height()) {
         vector<Data> data(bst.begin(), bst.end());
         sort(data.begin(), data.end());
         this->root = buildSubtree(data, 0, data.size(), iheight);
@@ -242,6 +242,7 @@ class BST {
                 root->setData(succ->getData());
                 succ->setData(temp->getData());
                 root->right = deleteNodeHelper(root->right, key);
+                delete temp;
                 
             }
             isize--;
