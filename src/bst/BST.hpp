@@ -98,9 +98,18 @@ class BST {
     unsigned int size() const { return isize; }
 
     /** TODO */
-    int height() {
-        iheight = height(root);
+    int height() const{
+        iheight = Cheight(this->root);
         return iheight;
+    }
+
+    int Cheight(BSTNode<Data>* root){
+        if (root == NULL){
+            return -1;
+        }
+        else {
+            return max(Cheight(root->left), Cheight(root->right))+1;
+        }
     }
 
     /** TODO */
@@ -204,14 +213,7 @@ class BST {
     }
 
     // Add more helper functions below
-    int height(BSTNode<Data>* root){
-        if (root == NULL){
-            return -1;
-        }
-        else {
-            return max(height(root->left), height(root->right))+1;
-        }
-    }
+
     void helper(vector<Data>& mydata, BSTNode<Data>* root) {
         if (root == nullptr) return;
         if (root->left != nullptr) helper(mydata, root->left);
@@ -220,29 +222,33 @@ class BST {
     }
     
     BSTNode<Data>* deleteNodeHelper(BSTNode<Data>* root, const Data& key) {
-        if (!root) return nullptr;
-        if (root->getData() == key) {
-            if (!root->right) {
-                BSTNode<Data>* left = root->left;
-                delete root;
-                isize--;
-                return left;
-            }
-            else {
-                BSTNode<Data>* succ = root->right;
-                while (succ->left) succ = succ->left;
-                BSTNode<Data>* temp = new BSTNode<Data>(root->getData());
-                root->setData(succ->getData());
-                succ->setData(temp->getData());
-                root->right = deleteNodeHelper(root->right, key);
-                delete temp;
-            }
+        if(root == NULL){
+            return root;
         }
-        else {
+        if(root->data > key){
             root->left = deleteNodeHelper(root->left, key);
+        }
+        if(root->data < key){
             root->right = deleteNodeHelper(root->right, key);
         }
-        return root;
+        if(root->left == NULL && root->right == NULL){
+            delete root;
+            return true;
+        }
+        else if(root->left == NULL){
+            root->parent = root->right;
+            delete root;
+            return root->parent;
+        }
+        else if(root->right == NULL){
+            root->parent = root->left;
+            delete root;
+            return root->parent;
+        }
+        else{
+            return 0;
+        }
+
     }
 
 };
