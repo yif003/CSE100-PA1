@@ -133,7 +133,7 @@ class BST {
         return mydata;
     }
     void setHeight(const Data& iheight){
-        iheight = height(root)-1;
+        iheight = height(root);
     }
 
     /**
@@ -207,18 +207,12 @@ class BST {
 
     // Add more helper functions below
     int height(BSTNode<Data>* root){
-        int h=0;
-        int b=0;
-        if(!root){
+        if (root == NULL){
             return -1;
         }
-        else{
-            height(root->right);
-            h++;
-            height(root->left);
-            b++;
+        else {
+            return max(height(root->left), height(root->right))+1;
         }
-        return max(h, b);
     }
     void helper(vector<Data>& mydata, BSTNode<Data>* root) {
         if (root == nullptr) return;
@@ -244,7 +238,6 @@ class BST {
                 succ->setData(temp->getData());
                 root->right = deleteNodeHelper(root->right, key);
                 delete temp;
-                
             }
         }
         else {
