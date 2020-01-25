@@ -99,17 +99,7 @@ class BST {
 
     /** TODO */
     int height() const{
-        iheight = Cheight(this->root);
-        return iheight;
-    }
-
-    int Cheight(BSTNode<Data>* root){
-        if (root == NULL){
-            return -1;
-        }
-        else {
-            return max(Cheight(root->left), Cheight(root->right))+1;
-        }
+        return heightHelper(root);
     }
 
     /** TODO */
@@ -213,6 +203,16 @@ class BST {
     }
 
     // Add more helper functions below
+    int BST<Data>::heightHelper(BSTNode<Data>* n) {
+
+    if(n == NULL){
+        return -1;
+    }
+    int right = heightHelper(n->right);
+    int left = heightHelper(n->left);
+
+    return max(right, left)+ 1;
+}
 
     void helper(vector<Data>& mydata, BSTNode<Data>* root) {
         if (root == nullptr) return;
@@ -225,31 +225,42 @@ class BST {
         if(root == NULL){
             return root;
         }
+        
         if(root->data > key){
             root->left = deleteNodeHelper(root->left, key);
+            
         }
         if(root->data < key){
             root->right = deleteNodeHelper(root->right, key);
         }
-        if(root->left == NULL && root->right == NULL){
+
+        if(root->left == NULL){
+            BSTNode<Data>* temp = root->right;
             delete root;
-            root->parent->left = NULL;
-            root->parent->right = NULL;
-            return root->parent;
-        }
-        else if(root->left == NULL){
-            root->parent = root->right;
-            delete root;
-            return root->parent;
+            isize--;
+            return temp;
         }
         else if(root->right == NULL){
-            root->parent = root->left;
+            BSTNode<Data>* temp = root->left;
             delete root;
-            return root->parent;
+            isize--;
+            return temp;
         }
         else{
-            return 0;
+            BSTNode<Data>* succP = root->right;
+            BSTNode<Data>* succ = root->right;
+            while(succ->left != NULL){
+                succP = succ;
+                succ = succ-> left;
+            }
+            succP->left = succ->right;
+            root->setData(succ->getData());
+
+            delete succ;
+            isize--;
+            return root;
         }
+
 
     }
 
