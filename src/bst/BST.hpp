@@ -233,7 +233,9 @@ class BST {
         }
         if(root->left == NULL && root->right == NULL){
             delete root;
-            return true;
+            root->parent->left = NULL;
+            root->parent->right = NULL;
+            return root->parent;
         }
         else if(root->left == NULL){
             root->parent = root->right;
