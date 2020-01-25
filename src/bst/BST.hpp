@@ -98,7 +98,8 @@ class BST {
     unsigned int size() const { return isize; }
 
     /** TODO */
-    int height() const {
+    int height() {
+        iheight = height(root);
         return iheight;
     }
 
@@ -131,9 +132,6 @@ class BST {
         vector<Data> mydata;
         helper(mydata, root);
         return mydata;
-    }
-    void setHeight(const Data& iheight){
-        iheight = height(root);
     }
 
     /**
