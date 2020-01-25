@@ -13,6 +13,7 @@ using namespace std;
 /**
  * TODO: add class header
  */
+
 template <typename Data>
 class BST {
   protected:
@@ -97,9 +98,21 @@ class BST {
     /** TODO */
     unsigned int size() const { return isize; }
 
+    int heightHelper(BSTNode<Data>* n){
+        if(n == NULL){
+            return -1;
+        }
+        int right = heightHelper(n->right);
+        int left = heightHelper(n->left);
+        return max(right, left)+1;
+    }
+    void setHeight(){
+        iheight = heightHelper(this->root);
+    }
+
     /** TODO */
     int height() const{
-        return heightHelper(root);
+        return iheight;
     }
 
     /** TODO */
@@ -203,17 +216,6 @@ class BST {
     }
 
     // Add more helper functions below
-    int BST<Data>::heightHelper(BSTNode<Data>* n) {
-
-    if(n == NULL){
-        return -1;
-    }
-    int right = heightHelper(n->right);
-    int left = heightHelper(n->left);
-
-    return max(right, left)+ 1;
-}
-
     void helper(vector<Data>& mydata, BSTNode<Data>* root) {
         if (root == nullptr) return;
         if (root->left != nullptr) helper(mydata, root->left);
@@ -226,11 +228,11 @@ class BST {
             return root;
         }
         
-        if(root->data > key){
+        if(root->getData() > key){
             root->left = deleteNodeHelper(root->left, key);
             
         }
-        if(root->data < key){
+        if(root->getData() < key){
             root->right = deleteNodeHelper(root->right, key);
         }
 
@@ -238,12 +240,14 @@ class BST {
             BSTNode<Data>* temp = root->right;
             delete root;
             isize--;
+            setHeight();
             return temp;
         }
         else if(root->right == NULL){
             BSTNode<Data>* temp = root->left;
             delete root;
             isize--;
+            setHeight();
             return temp;
         }
         else{
@@ -258,6 +262,7 @@ class BST {
 
             delete succ;
             isize--;
+            setHeight();
             return root;
         }
 
